@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.block {
+			width: 200px;
+			height: 200px;
+			background: #666;
+		}
+		.red {
+			color: red
+		}
+		.blue {
+			color: blue;
+		}
+		
+	</style>
+</head>
+<body>
+<div id="app">
+	<h1 v-once>Привет, {{ name }} </h1>
+	<h2> {{sayHello ()}} </h2>
+	<!--a v-bind:href="link">Geekbrains</a-->
+	<!--a :href="link">Geekbrains</a-->
+	<span v-html="completeEl"></span>
+	
+	<div>
+		<button @click="justDoIt">Just do it</button>
+		<p> {{ counter }} </p>
+		<p> {{ counter > 10 ? 'More than 10' : 'Less than 10' }} </p>
+	</div>
+	<p @mousemove="getCoordinates">Some long string, {{x}} / {{y}} <span @mousemove.stop>NO ACTION!</span></p>
+	<div>
+		<input type="text" v-model.lazy="someText"><br>
+		<p>Текст в инпуте: {{ someText }}</p>
+	</div>
+	
+	<div>
+		<p @click="isRed = !isRed" :class="{red: !isRed, blue: isRed}">Some text</p>
+		<p @click="isRed = !isRed" :class="{red: isRed, blue: !isRed}">more text</p>
+		
+	</div>
+	
+	<p v-if="show1">I'm visible</p>
+	<p v-else="!show1">Now I'm visible</p>
+	<button @click="show1 = !show1">Show hidden</button>
+	<p v-show="!show1">Now I'm visible</p>
+
+	<div class="products" v-for="product of products">
+		<img :src="product.img" alt="">
+		<div class="desc">
+			<p>Название: {{ product.title }} </p>
+			<p>Количество: {{ product.quantity }} </p>
+			<p>Стоимость: {{ product.price }} </p>
+			<button @click="addProduct (product)">Купить</button>
+		</div>
+	</div>
+</div>
+
+	
+<script type="text/javascript" src="vue.js"></script>
+
+<script>
+	let app = new Vue ({
+		el : '#app',
+		data : {
+			name : 'Geek',
+			link : 'https://geekbrains.ru/teacher/lessons/37303',
+			completeEl: '<a href="https://geekbrains.ru/teacher/lessons/37303">Geekbrains</a>',
+			counter: 0,
+			x: 0,
+			y: 0,
+			someText: 'some',
+			isRed: false,
+			show1: false,
+			products: [
+				{title: 'pr_1', img: 'http://placehold.it/250x150', price: 100, quantity: 10},
+				{title: 'pr_2', img: 'http://placehold.it/250x150', price: 12, quantity: 120},
+				{title: 'pr_3', img: 'http://placehold.it/250x150', price: 23, quantity: 110},
+				{title: 'pr_4', img: 'http://placehold.it/250x150', price: 1000, quantity: 4},
+				{title: 'pr_5', img: 'http://placehold.it/250x150', price: 1, quantity: 10}
+			]
+		},
+		methods : {
+			sayHello () {
+				this.name = 'And';
+				return this.name;
+
+			},
+			justDoIt () {
+				this.counter++
+			},
+			getCoordinates () {
+				this.x = event.clientX,
+				this.y = event.clientY
+			},
+			addProduct (product) {
+				product.quantity++
+			}
+			
+		}
+	});
+</script>
+</body>
+</html>
